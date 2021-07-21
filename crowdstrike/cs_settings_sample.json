@@ -1,0 +1,27 @@
+{
+  "instructions": "Copy this file to `cs_settings.json`, then update with your real API key",
+  "root_url": "https://nucleus-trial1.nucleussec.com",
+  "api_key": "0123456789abcdef0123456789abcdef",
+  "fields": [
+    "nucleus_import_version",
+    "host_name",
+    "ip_address",
+    "scan_type",
+    "scan_tool",
+    "finding_type",
+    "finding_cve",
+    "finding_number",
+    "finding_output",
+    "finding_name",
+    "finding_severity",
+    "finding_description",
+    "finding_recommendation",
+    "scan_date",
+    "finding_result",
+    "finding_references",
+    "finding_exploitable",
+    "operating_system_name",
+    "host_location",
+    "finding_port"
+  ]
+}
