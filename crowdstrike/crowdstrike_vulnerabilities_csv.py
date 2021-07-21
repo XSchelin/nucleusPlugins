@@ -46,10 +46,10 @@ def customParser(inpath, outpath):
                 next(findings)
 
                 # Going to be used to check for duplicates in the input file
-                csv_line = []
                 csv_dupe_array = []
 
                 for finding in findings:
+                    csv_line = []
                     # Grab the values we need
                     try:
                         asset_name = finding[0].strip()
@@ -64,18 +64,28 @@ def customParser(inpath, outpath):
                         severity = finding[11]
                         scan_date = finding[12]
 
-                        # If there's a vendor advisory link, append it to the description
-                        if finding[18] != "":
-                            description += "\n\n<a href='" + \
-                                finding[18] + "' target="'_blank'">" + \
-                                finding[18] + "</a>"
+                        # If there's an evidence, append it to the description
+                        if finding[29] != "":
+                            description += "\n\nVulnerable product version(s): " + finding[29]
 
-                        solution = finding[21]
+                        solution = finding[20] + ": " + finding[21]
                         if finding[22] != "":
                             solution += "\n\n" + finding[22]
                         finding_exploitable = 'false' if finding[26] == "0" else 'true'
 
                         references = "Exploit Status:" + finding[27] + "," + "Exploit Status Value:" + finding[26]
+
+                        # Append links to the references area
+                        ref_links = []
+                        if finding[18] != "":
+                            new_link = "<a href='" + finding[18] + "' target='_blank'>" + finding[18] + "</a>"
+                            ref_links.append(new_link)
+                        if finding[19] != "":
+                            links = finding[19].split(", ")
+                            for link in links:
+                                new_link = "<a href='" + link + "' target='_blank'>" + link + "</a>"
+                                ref_links.append(new_link)
+                        references += "\n\n" + "\n".join(ref_links)
 
                         # Used to check for duplicates.
                         # Alter this if you want to change how Nucleus tracks instances of vulns
@@ -90,6 +100,7 @@ def customParser(inpath, outpath):
 
                     # Use this to deduplicate the findings from CrowdStrike
                     if fjk in csv_dupe_array:
+                        print("whoop")
                         pass
 
                     else:
